@@ -7,24 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-image: url('https://www.minecraftskins.com/static/img/minecraft-bg.jpg'); /* Fundo Minecraft */
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: white;
         }
 
         .container {
             text-align: center;
-            background-color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 600px;
         }
 
         h1 {
-            color: #333;
+            color: #f0f0f0;
         }
 
         button {
@@ -53,28 +57,71 @@
             margin-left: 20px;
             display: inline-block;
         }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .result {
+            margin-top: 20px;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            margin: 20px auto;
+            display: none;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Gerador de Skin Minecraft</h1>
         <div>
-            <button onclick="chooseSkin('minha')">Escolher minha skin</button>
-            <button onclick="chooseSkin('amigo')">Escolher skin do amigo</button>
+            <button onclick="chooseSkin('minha')">Escolher minha skin (URL)</button>
+            <button onclick="chooseSkin('amigo')">Escolher skin do amigo (URL)</button>
+            <input type="file" id="fileInputMinha" onchange="handleFileSelect('minha')" />
+            <input type="file" id="fileInputAmigo" onchange="handleFileSelect('amigo')" />
             <button onclick="generateSkin()">Gerar nova skin</button>
         </div>
-        <div class="skin-preview" id="minhaSkinPreview"></div>
-        <div class="skin-preview" id="amigoSkinPreview"></div>
-        <div class="skin-preview" id="novaSkinPreview"></div>
+        <div>
+            <h3>Minha Skin</h3>
+            <div class="skin-preview" id="minhaSkinPreview"></div>
+            <h3>Skin do Amigo</h3>
+            <div class="skin-preview" id="amigoSkinPreview"></div>
+        </div>
+        <div>
+            <h3>Nova Skin Gerada</h3>
+            <div class="result" id="novaSkinPreview"></div>
+            <a id="downloadLink" class="download-btn" download="nova_skin.png">
+                <button>Baixar Nova Skin</button>
+            </a>
+        </div>
+        <div class="footer">
+            Codado por @jean
+        </div>
     </div>
 
     <script>
         let minhaSkin = null;
         let amigoSkin = null;
 
+        // Função para escolher skin via URL
         function chooseSkin(tipo) {
             const url = prompt("Insira o link da sua skin (URL):");
-            
+
             if (url && isValidSkinUrl(url)) {
                 if (tipo === 'minha') {
                     minhaSkin = url;
@@ -88,22 +135,44 @@
             }
         }
 
+        // Função para lidar com a escolha de arquivo
+        function handleFileSelect(tipo) {
+            const fileInput = tipo === 'minha' ? document.getElementById('fileInputMinha') : document.getElementById('fileInputAmigo');
+            const file = fileInput.files[0];
+            if (file && file.type === 'image/png') {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgUrl = e.target.result;
+                    if (tipo === 'minha') {
+                        minhaSkin = imgUrl;
+                        document.getElementById("minhaSkinPreview").style.backgroundImage = `url(${imgUrl})`;
+                    } else if (tipo === 'amigo') {
+                        amigoSkin = imgUrl;
+                        document.getElementById("amigoSkinPreview").style.backgroundImage = `url(${imgUrl})`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Por favor, selecione um arquivo PNG.");
+            }
+        }
+
+        // Função para gerar a nova skin (por enquanto, só exibe a skin escolhida)
         function generateSkin() {
             if (minhaSkin && amigoSkin) {
-                // Lógica para juntar a cabeça da minha skin na skin do amigo
-                // Aqui você deve usar um serviço de manipulação de imagens ou uma API para fazer isso.
-                // Para o exemplo, vamos apenas mudar a imagem da nova skin.
-                
-                alert("A nova skin foi gerada! (Este exemplo não inclui a manipulação real da imagem)");
-                document.getElementById("novaSkinPreview").style.backgroundImage = `url(${minhaSkin})`;
+                document.getElementById("novaSkinPreview").style.backgroundImage = `url(${minhaSkin})`; // Apenas exibe a "minha skin" por enquanto.
+                document.getElementById("novaSkinPreview").style.display = 'block';
+                const downloadLink = document.getElementById("downloadLink");
+                downloadLink.style.display = 'inline-block';
+                downloadLink.href = minhaSkin;  // Para fins de teste, você pode apenas fazer o download da "minha skin"
             } else {
                 alert("Por favor, escolha as skins antes de gerar.");
             }
         }
 
+        // Validação da URL (só aceita URLs PNG)
         function isValidSkinUrl(url) {
-            // Validação simples de URL para verificar se é um link de uma skin do Minecraft
-            return url.endsWith('.png');
+            return url && url.endsWith('.png');
         }
     </script>
 </body>
