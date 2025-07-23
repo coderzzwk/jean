@@ -3,184 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Skin Minecraft</title>
+    <title>Rucoy Online - Jogue Agora</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://www.minecraftskins.com/static/img/minecraft-bg.jpg'); /* Fundo Minecraft */
-            background-size: cover;
+            background-color: #2b2b2b;
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
-            margin: 0;
-            color: white;
+            background-image: url('https://www.google.com/search?q=rucoy+online&rlz=1C1GCEU_enBR832BR832&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiCvZzj8vPqAhUNfisKHS0VDEwQ_AUIEigB&biw=1366&bih=657#imgrc=-KZg29-JxKh7mM'); /* Substitua com imagem relevante */
+            background-size: cover;
+            background-position: center;
         }
 
         .container {
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            width: 80%;
-            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
             color: #f0f0f0;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
-            border: none;
-            background-color: #4CAF50;
+        .game-image {
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #ff6b6b;
             color: white;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .skin-preview {
-            margin-top: 20px;
-            width: 200px;
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 5px;
-            margin-left: 20px;
-            display: inline-block;
+        .download-btn:hover {
+            background-color: #ff3d3d;
         }
 
         .footer {
-            margin-top: 20px;
-            font-size: 14px;
+            margin-top: 30px;
             color: #bbb;
-        }
-
-        input[type="file"] {
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        .result {
-            margin-top: 20px;
-            width: 200px;
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 5px;
-            margin: 20px auto;
-            display: none;
-        }
-
-        .download-btn {
-            margin-top: 20px;
-            display: none;
-        }
-
-        .btn-container {
-            margin-bottom: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Gerador de Skin Minecraft</h1>
-        <div class="btn-container">
-            <button onclick="chooseSkin('minha')">Escolher minha skin (URL)</button>
-            <button onclick="chooseSkin('amigo')">Escolher skin do amigo (URL)</button>
-            <input type="file" id="fileInputMinha" onchange="handleFileSelect('minha')" />
-            <input type="file" id="fileInputAmigo" onchange="handleFileSelect('amigo')" />
-            <button onclick="generateSkin()">Gerar nova skin</button>
-        </div>
-        <div>
-            <h3>Minha Skin</h3>
-            <div class="skin-preview" id="minhaSkinPreview"></div>
-            <h3>Skin do Amigo</h3>
-            <div class="skin-preview" id="amigoSkinPreview"></div>
-        </div>
-        <div>
-            <h3>Nova Skin Gerada</h3>
-            <div class="result" id="novaSkinPreview"></div>
-            <a id="downloadLink" class="download-btn" download="nova_skin.png">
-                <button>Baixar Nova Skin</button>
-            </a>
-        </div>
+        <h1>Rucoy Online - Jogue Agora!</h1>
+
+        <img src="https://www.google.com/search?q=rucoy+online&rlz=1C1GCEU_enBR832BR832&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiCvZzj8vPqAhUNfisKHS0VDEwQ_AUIEigB&biw=1366&bih=657#imgrc=-KZg29-JxKh7mM" alt="Rucoy Online Game" class="game-image">
+
+        <a href="Caminho_do_arquivo_do_jogo_aqui">
+            <button class="download-btn">Jogue Agora</button>
+        </a>
+
         <div class="footer">
-            Codado por @jean
+            Codado por @jean - Rucoy Online é um RPG online incrível!
         </div>
     </div>
-
-    <script>
-        let minhaSkin = null;
-        let amigoSkin = null;
-
-        // Função para escolher skin via URL
-        function chooseSkin(tipo) {
-            const url = prompt("Insira o link da sua skin (URL):");
-
-            if (url && isValidSkinUrl(url)) {
-                if (tipo === 'minha') {
-                    minhaSkin = url;
-                    document.getElementById("minhaSkinPreview").style.backgroundImage = `url(${minhaSkin})`;
-                } else if (tipo === 'amigo') {
-                    amigoSkin = url;
-                    document.getElementById("amigoSkinPreview").style.backgroundImage = `url(${amigoSkin})`;
-                }
-            } else {
-                alert("URL inválida ou não reconhecida como uma skin Minecraft.");
-            }
-        }
-
-        // Função para lidar com a escolha de arquivo
-        function handleFileSelect(tipo) {
-            const fileInput = tipo === 'minha' ? document.getElementById('fileInputMinha') : document.getElementById('fileInputAmigo');
-            const file = fileInput.files[0];
-            if (file && file.type === 'image/png') {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const imgUrl = e.target.result;
-                    if (tipo === 'minha') {
-                        minhaSkin = imgUrl;
-                        document.getElementById("minhaSkinPreview").style.backgroundImage = `url(${imgUrl})`;
-                    } else if (tipo === 'amigo') {
-                        amigoSkin = imgUrl;
-                        document.getElementById("amigoSkinPreview").style.backgroundImage = `url(${imgUrl})`;
-                    }
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert("Por favor, selecione um arquivo PNG.");
-            }
-        }
-
-        // Função para gerar a nova skin
-        function generateSkin() {
-            if (minhaSkin && amigoSkin) {
-                // Exibir a skin gerada (apenas exibe a minha skin por enquanto)
-                document.getElementById("novaSkinPreview").style.backgroundImage = `url(${minhaSkin})`; // Isso é um exemplo
-                document.getElementById("novaSkinPreview").style.display = 'block';
-
-                // Mostrar o botão de download
-                const downloadLink = document.getElementById("downloadLink");
-                downloadLink.style.display = 'inline-block';
-                downloadLink.href = minhaSkin; // Para fins de teste, o download será da "minha skin"
-            } else {
-                alert("Por favor, escolha as skins antes de gerar.");
-            }
-        }
-
-        // Validação da URL (só aceita URLs PNG)
-        function isValidSkinUrl(url) {
-            return url && url.endsWith('.png');
-        }
-    </script>
 </body>
 </html>
