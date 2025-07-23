@@ -49,8 +49,8 @@
 
         .skin-preview {
             margin-top: 20px;
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             background-size: cover;
             background-position: center;
             border-radius: 5px;
@@ -71,8 +71,8 @@
 
         .result {
             margin-top: 20px;
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             background-size: cover;
             background-position: center;
             border-radius: 5px;
@@ -84,12 +84,16 @@
             margin-top: 20px;
             display: none;
         }
+
+        .btn-container {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Gerador de Skin Minecraft</h1>
-        <div>
+        <div class="btn-container">
             <button onclick="chooseSkin('minha')">Escolher minha skin (URL)</button>
             <button onclick="chooseSkin('amigo')">Escolher skin do amigo (URL)</button>
             <input type="file" id="fileInputMinha" onchange="handleFileSelect('minha')" />
@@ -157,14 +161,17 @@
             }
         }
 
-        // Função para gerar a nova skin (por enquanto, só exibe a skin escolhida)
+        // Função para gerar a nova skin
         function generateSkin() {
             if (minhaSkin && amigoSkin) {
-                document.getElementById("novaSkinPreview").style.backgroundImage = `url(${minhaSkin})`; // Apenas exibe a "minha skin" por enquanto.
+                // Exibir a skin gerada (apenas exibe a minha skin por enquanto)
+                document.getElementById("novaSkinPreview").style.backgroundImage = `url(${minhaSkin})`; // Isso é um exemplo
                 document.getElementById("novaSkinPreview").style.display = 'block';
+
+                // Mostrar o botão de download
                 const downloadLink = document.getElementById("downloadLink");
                 downloadLink.style.display = 'inline-block';
-                downloadLink.href = minhaSkin;  // Para fins de teste, você pode apenas fazer o download da "minha skin"
+                downloadLink.href = minhaSkin; // Para fins de teste, o download será da "minha skin"
             } else {
                 alert("Por favor, escolha as skins antes de gerar.");
             }
